@@ -1,0 +1,15 @@
+html {
+    font-size: 18px;
+}
+
+body {
+    background-color: var(--background-page);
+}
+
+.container {
+    width: 200px;
+    height: 200px;
+    background-color: burlywood;
+    padding: 20px;
+    border: 5px solid #333;
+}

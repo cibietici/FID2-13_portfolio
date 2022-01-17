@@ -8,11 +8,13 @@ body {
 
 header {
     position: fixed;
-    min-height: 80px;
+    min-height: 60px;
     width: 100%;
     color: #fff;
     background-color: #000;
     z-index: 5;
+    display: flex;
+    justify-content: space-between;
 }
 
 footer {
@@ -55,17 +57,38 @@ footer {
     font-size: 24px;
 }
 
+header nav ul {
+    display: flex;
+    list-style: none;
+}
+
 header nav ul li {
-    display: inline-block;
-    width: 100px;
+    padding: 5px;
 }
 
 header nav ul li a {
     color: #fff;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s ease-in-out;
+}
+
+header nav ul li a:hover {
+    border-bottom: 2px solid #fff;
+}
+
+header nav {
+    padding: 5px;
 }
 
 .burger-icon {
     display: block;
+    cursor: pointer;
+}
+
+.close-mobile-nav {
+    cursor: pointer;
+    margin-bottom: 20px;
 }
 
 @media screen and (min-width: 768px)  {
@@ -76,15 +99,57 @@ header nav ul li a {
 
 
 .logo {
-    display: inline;
+    display: block;
+    padding: 10px;
 }
 
-header nav {
+.main-menu-desktop {
     display: none;
 }
 
 @media screen and (min-width: 768px) {
-    header nav {
+    .main-menu-desktop {
         display: block;
+    }
+}
+
+.main-menu-mobile {
+    background-color: #000000CC;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 2000;
+    animation-name: slideIn;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(800px);
+    }
+
+    to {
+        transform: translate(0px);
+    }
+}
+
+.hidemobileview {
+    display: none;
+}
+
+.main-menu-mobile ul {
+    display: block;
+}
+.main-menu-mobile ul li {
+    display: block;
+    font-size: 43px;
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .main-menu-mobile {
+        display: none;
     }
 }

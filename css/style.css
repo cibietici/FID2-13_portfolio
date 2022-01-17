@@ -15,6 +15,13 @@ header {
     z-index: 5;
 }
 
+footer {
+    min-height: 40px;
+    padding: 5px;
+    background-color: #000;
+    color: #fff;
+}
+
 .container {
     width: 100vw;
     height: 100vh;

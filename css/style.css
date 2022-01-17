@@ -12,6 +12,7 @@ header {
     width: 100%;
     color: #fff;
     background-color: #000;
+    z-index: 5;
 }
 
 .container {
@@ -32,7 +33,51 @@ header {
     padding: 5px;
     background-color: #fff;
     position: absolute;
-    bottom: 200px;
+    top: 200px;
     left: 40px;
     font-size: 44px;
+}
+
+.container span {
+    color: #000;
+    padding: 5px;
+    background-color: #fff;
+    position: absolute;
+    top: 260px;
+    left: 40px;
+    font-size: 24px;
+}
+
+header nav ul li {
+    display: inline-block;
+    width: 100px;
+}
+
+header nav ul li a {
+    color: #fff;
+}
+
+.burger-icon {
+    display: block;
+}
+
+@media screen and (min-width: 768px)  {
+    .burger-icon {
+        display: none;
+    }
+}
+
+
+.logo {
+    display: inline;
+}
+
+header nav {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    header nav {
+        display: block;
+    }
 }

@@ -14,15 +14,30 @@ function init() {
     getposts()
 }
 
+const workListEL = document.querySelector('#worklist')
+const cdnUrl = 'https://cdn.sanity.io/images/p5snqp28/production/'
+
 async function getposts() {
     const posts = await fetch(`https://p5snqp28.api.sanity.io/v1/data/query/production?query=*
     [_type == "post"]`
     )
     const { result } = await posts.json()
     result.forEach(res => {
-        console.log(res)
+        const cover = res.mainImage.asset._ref.split('-')
+
+        const workBlock = document.createElement('div')
+        workBlock.classList.add('work')
+        const workTitle = document.createElement('h2')
+        workTitle.classList.add('work-title')
+        workTitle.innerText = res.title
+        workBlock.append(workTitle)
+        const workCover = document.createElement('img')
+        workCover.setAttribute('src', `${cdnUrl}${cover[1]}-${cover[2]}.${cover[3]}`)
+        workCover.classList.add('work-cover')
+        workBlock.append(workCover)
+        workListEL.append(workBlock)
+        console.log(workListEL)
     })
-    console.log(result)
 }
 
 init ();

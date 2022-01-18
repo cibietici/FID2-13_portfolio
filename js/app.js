@@ -1,5 +1,13 @@
 function init() {
 
+    const URL = window.location.href
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const page = urlParams.get('page')
+
+    console.log(page);
+    console.log(URL)
+
     const burgerIcon = document.querySelector('.burger-icon')
     const mobileNav = document.querySelector('.main-menu-mobile')
     burgerIcon.addEventListener('click', () => {
@@ -11,11 +19,20 @@ function init() {
         mobileNav.classList.toggle('hidemobileview')
     })
 
-    getposts()
+    if(!page) {
+        getposts()
+    } else {
+        getpost(page)
+    } 
 }
 
 const workListEL = document.querySelector('#worklist')
 const cdnUrl = 'https://cdn.sanity.io/images/p5snqp28/production/'
+
+function getpost(page) {
+    console.log(page)
+    return true
+}
 
 async function getposts() {
     const posts = await fetch(`https://p5snqp28.api.sanity.io/v1/data/query/production?query=*
@@ -25,8 +42,9 @@ async function getposts() {
     result.forEach(res => {
         const cover = res.mainImage.asset._ref.split('-')
 
-        const workBlock = document.createElement('div')
+        const workBlock = document.createElement('a')
         workBlock.classList.add('work')
+        workBlock.setAttribute('href', `/work.html?page=${res.slug.current}`)
         const workTitle = document.createElement('h2')
         workTitle.classList.add('work-title')
         workTitle.innerText = res.title

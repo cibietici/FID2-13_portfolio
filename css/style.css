@@ -153,3 +153,26 @@ header nav {
         display: none;
     }
 }
+
+#worklist {
+    display: flex;
+    gap: 20px;
+    flex-flow: row wrap;
+}
+
+.work {
+    max-width: 400px;
+    position: relative;
+}
+
+.work-cover {
+    max-width: 100%;
+}
+
+.work-title {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    color: #fff;
+}
+

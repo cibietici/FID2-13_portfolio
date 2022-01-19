@@ -1,5 +1,6 @@
 html {
     font-size: 20px;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -29,7 +30,8 @@ header {
 .main-menu-desktop ul li a {
     color: #fff;
     text-decoration: none;
-    transition: border 0.3s ease-in-out;
+    border-bottom: 2px solid transparent;
+    transition: border 0.2s ease-in-out;
 }
 
 .main-menu-desktop ul li a:hover {
@@ -46,8 +48,28 @@ header {
     }
 }
 
+.close-mobile-menu {
+    cursor: pointer;
+}
+
 .burger-icon {
-    padding: 0.8rem
+    padding: 0.8rem;
+    cursor: pointer;
+    z-index: 2000;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin: 0.4rem;
+}
+
+.burger {
+    background-image: url('../assets/burger.svg');
+    background-repeat: no-repeat;
+}
+
+.closemobilemenu {
+    background-image: url('../assets/closemenu.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 @media screen and (min-width: 768px)  {
@@ -69,6 +91,7 @@ header {
     padding: 2rem;
     animation-name: slideIn;
     animation-duration: 0.3s;
+    z-index: 10;
 }
 
 .mobile-nav-hide {

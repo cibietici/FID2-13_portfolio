@@ -1,5 +1,5 @@
 html {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 body {
@@ -13,13 +13,86 @@ header {
     color: #fff;
     background-color: #000;
     z-index: 5;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
 }
 
-footer {
-    min-height: 40px;
-    padding: 5px;
-    background-color: #000;
+.main-menu-desktop ul {
+    display: flex;
+    list-style: none;
+    gap: 1.2rem;
+    padding: 0.8rem;
+}
+
+
+.main-menu-desktop ul li a {
     color: #fff;
+    text-decoration: none;
+    transition: border 0.3s ease-in-out;
+}
+
+.main-menu-desktop ul li a:hover {
+    border-bottom: 2px solid #fff;
+}
+
+.main-menu-desktop {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .main-menu-desktop {
+        display: block;
+    }
+}
+
+.burger-icon {
+    padding: 0.8rem
+}
+
+@media screen and (min-width: 768px)  {
+    .burger-icon {
+        display: none;
+    }
+}
+
+.logo {
+    padding: 0.8rem;
+}
+
+.mobile-nav {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align:center;
+    padding: 2rem;
+    animation-name: slideIn;
+    animation-duration: 0.3s;
+}
+
+.mobile-nav-hide {
+    display: none;
+}
+
+.mobile-nav ul {
+    list-style: none;
+}
+
+.mobile-nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 3rem;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(100vw);
+    }
+
+    to {
+        transform: translate(0px);
+    }
 }
 
 .container {
@@ -55,36 +128,9 @@ footer {
     font-size: 24px;
 }
 
-header nav ul li {
-    display: inline-block;
-    width: 100px;
-}
-
-header nav ul li a {
+footer {
+    min-height: 40px;
+    padding: 5px;
+    background-color: #000;
     color: #fff;
-}
-
-.burger-icon {
-    display: block;
-}
-
-@media screen and (min-width: 768px)  {
-    .burger-icon {
-        display: none;
-    }
-}
-
-
-.logo {
-    display: inline;
-}
-
-header nav {
-    display: none;
-}
-
-@media screen and (min-width: 768px) {
-    header nav {
-        display: block;
-    }
 }

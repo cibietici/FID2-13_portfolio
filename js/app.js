@@ -29,8 +29,13 @@ function init() {
 const workListEL = document.querySelector('#worklist')
 const cdnUrl = 'https://cdn.sanity.io/images/p5snqp28/production/'
 
-function getpost(page) {
+async function getpost(page) {
     console.log(page)
+    const posts = await fetch(`https://p5snqp28.api.sanity.io/v1/data/query/production?query=*
+    [slug.current == "${page}"]`
+    )
+    const { result } = await posts.json()
+    console.log(result)
     return true
 }
 

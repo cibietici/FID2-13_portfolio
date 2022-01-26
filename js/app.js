@@ -1,4 +1,8 @@
 function init() {
+    const urlString = window.location.search;
+    const paramsUrl = new URLSearchParams(urlString);
+    const pageValue = paramsUrl.get('page')
+
     const burgerIcon = document.querySelector('.burger-icon');
     const mobileNav = document.querySelector('.mobile-nav');
     burgerIcon.addEventListener('click', () => {
@@ -6,7 +10,41 @@ function init() {
         burgerIcon.classList.toggle('burger');
         burgerIcon.classList.toggle('closemobilemenu');
     });
-    getPosts();
+
+    if(pageValue === null) {
+        getPosts(); 
+    } else {
+        getPost(pageValue);
+    }
+}
+
+
+// her definer noen generisk variabler: den første er cdn (content distribution network)
+// her inne sanity lagre bilder vi lastet opp i sanity platform
+const cdnUrl = 'https://cdn.sanity.io/images/p5snqp28/production/';
+
+async function getPost(pageValue) {
+    const project = document.querySelector('.project');
+    const post = await fetch(`https://p5snqp28.api.sanity.io/v1/data/query/production?query=*
+    [slug.current == "${pageValue}"]
+    `);
+    const { result } = await post.json();
+    console.log(result)
+    const imgCover = result[0].mainImage.asset._ref.split('-'); // her har vi array med 4 verdi av bildet
+    // vi trenger fast url av cdn + verdi i index 1, 2 og 3
+    /*['image', 'dsefs45tfsrgfg5ge', '1200x800', 'jpg'] eksempel av cover
+    */
+    const cover = document.createElement('img');
+    cover.setAttribute('src', `${cdnUrl}${imgCover[1]}-${imgCover[2]}.${imgCover[3]}`)
+    console.log(cover)
+    project.append(cover)
+    const title = document.createElement('h1');
+    title.innerText = result[0].title;
+    project.append(title)
+
+    const body = document.createElement('p');
+    body.innerText = result[0].body;
+    project.append(body);
 }
 
 // følgende er en async støtte funksjon for å hente data fra sanity
@@ -25,9 +63,6 @@ async function getPosts() {
     const { result } = await posts.json();
     /* result er nå en array av objekter med data vi skriver i vår sanity.studio */
     
-    // her definer noen generisk variabler: den første er cdn (content distribution network)
-    // her inne sanity lagre bilder vi lastet opp i sanity platform
-    const cdnUrl = 'https://cdn.sanity.io/images/p5snqp28/production/';
 
     // her definerer vi inn i en variabel hvor vi kommer til å bygge de blokkene med prosjekter
     const worksList = document.querySelector('.workslist');

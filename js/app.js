@@ -18,47 +18,20 @@ function init() {
     }
 }
 
-
-// her definer noen generisk variabler: den første er cdn (content distribution network)
-// her inne sanity lagre bilder vi lastet opp i sanity platform
-const cdnUrl = 'https://cdn.sanity.io/images/p5snqp28/production/';
-
-function handleParagraphs(body) {
-    const text = document.createElement('article');
-    if (body) {
-        body.forEach(p => {
-            if(p._type === 'span') {
-              const newp = document.createElement('p');
-              newp.innerText = p.children.text;
-              text.append(newp); 
-            }
-        })
-    };
-    return text;
-}
-
+// følgende er funksjonen for å hente en singel post/projekt
+// NB. = projectID variable kommer fra env.js fil
 async function getPost(pageValue) {
     const project = document.querySelector('.project');
-    const post = await fetch(`https://p5snqp28.api.sanity.io/v1/data/query/production?query=*
+    const post = await fetch(`https://${projectID}.api.sanity.io/v1/data/query/production?query=*
     [slug.current == "${pageValue}"]
     `);
     const { result } = await post.json();
-    console.log(result)
-    const imgCover = result[0].mainImage.asset._ref.split('-'); // her har vi array med 4 verdi av bildet
-    // vi trenger fast url av cdn + verdi i index 1, 2 og 3
-    /*['image', 'dsefs45tfsrgfg5ge', '1200x800', 'jpg'] eksempel av cover
-    */
-    const cover = document.createElement('img');
-    cover.setAttribute('src', `${cdnUrl}${imgCover[1]}-${imgCover[2]}.${imgCover[3]}`)
-    console.log(cover)
-    project.append(cover)
+    // her legger vi inn project variabel ferdig <img> element returnert fra stætte funksjon som håndtere bilder
+    project.append(handleImage(result[0].mainImage.asset._ref));
     const title = document.createElement('h1');
     title.innerText = result[0].title;
     project.append(title)
-
-    const body = document.createElement('p');
-    body.innerHTML = handleParagraphs(result[0].body);
-    project.append(body);
+    project.append(handleParagraphs(result[0].body));
 }
 
 // følgende er en async støtte funksjon for å hente data fra sanity
@@ -69,7 +42,8 @@ async function getPosts() {
     fetch er javascript funksjon som venter på url argument 
     i vår tilfeldig url er sanity endpoint med query for filtrere bare post (prosjekter) 
     siden fetch er en "Promise" må vi bruke await [_type == "post"] filtrerer bare content type "post"*/
-    const posts =  await fetch(`https://p5snqp28.api.sanity.io/v1/data/query/production?query=*
+    // NB. = projectID variable kommer fra env.js fil
+    const posts =  await fetch(`https://${projectID}.api.sanity.io/v1/data/query/production?query=*
     [_type == "post"]
     `);
     /* etter fetch har ferdig returnere en http response objekt og vi henter ut av det
@@ -103,6 +77,10 @@ async function getPosts() {
         const workMask = document.createElement('div'); // vi lager div mask
         workMask.classList.add('work-mask'); // <div class="work-mask"></div>
         workBlock.append(workMask); // og legge vi inn <div> inn i <a> block
+
+        //Bildet håndtering
+        // det som følger etter trenger vi for å hente bilder fra sanity CDN plattform 
+        // vi henter reference og skriver vi inn et element <img>
         const workCover = document.createElement('img'); // her bigger vi element img
         // som trenger en attribute image fra sanity objekt
         // med split for jeg ut veriene for å bygge url av bildet
@@ -112,7 +90,14 @@ async function getPosts() {
         */
         workCover.setAttribute('src', `${cdnUrl}${cover[1]}-${cover[2]}.${cover[3]}`);
         workCover.classList.add('work-cover'); // legge vi til class til img tag
-        workBlock.append(workCover); // legge vi inn img inn i <a> block
+        // følgende linje er erstattet av linje 96 vi sender key image og en class vi kan bruke i dette context
+        //workBlock.append(workCover); // legge vi inn img inn i <a> block
+
+        // i alternativt til de fem linjer over kan vi benytte av en stætte funksjon som gjøre jobben en gang for alle
+        // ved å bruke dette løsning kan vi slette alt fra 79 til 92 og beholde bare dette som kommer
+        workBlock.append(handleImage(post.mainImage.asset._ref, 'work-cover'));
+        // slut av bildet håndtering
+
         worksList.append(workBlock); // til slutt legge vi inn hele <a> block inn i worklist section
     });
 

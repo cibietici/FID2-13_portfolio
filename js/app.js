@@ -1,3 +1,7 @@
+import { cdnUrl, projectID } from './env.js';
+import { handleImage } from './utils.js';
+import { handleParagraphs } from './utils.js';
+
 function init() {
     const urlString = window.location.search;
     const paramsUrl = new URLSearchParams(urlString);

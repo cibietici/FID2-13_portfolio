@@ -234,3 +234,7 @@ footer {
 .project p {
     margin: 1rem 0;
 }
+
+.basic-image {
+    width: 100%;
+}

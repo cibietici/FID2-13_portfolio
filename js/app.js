@@ -23,6 +23,20 @@ function init() {
 // her inne sanity lagre bilder vi lastet opp i sanity platform
 const cdnUrl = 'https://cdn.sanity.io/images/p5snqp28/production/';
 
+function handleParagraphs(body) {
+    const text = document.createElement('article');
+    if (body) {
+        body.forEach(p => {
+            if(p._type === 'span') {
+              const newp = document.createElement('p');
+              newp.innerText = p.children.text;
+              text.append(newp); 
+            }
+        })
+    };
+    return text;
+}
+
 async function getPost(pageValue) {
     const project = document.querySelector('.project');
     const post = await fetch(`https://p5snqp28.api.sanity.io/v1/data/query/production?query=*
@@ -43,7 +57,7 @@ async function getPost(pageValue) {
     project.append(title)
 
     const body = document.createElement('p');
-    body.innerText = result[0].body;
+    body.innerHTML = handleParagraphs(result[0].body);
     project.append(body);
 }
 

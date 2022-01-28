@@ -1,6 +1,5 @@
 import { cdnUrl, projectID } from './env.js';
-import { handleImage } from './utils.js';
-import { handleParagraphs } from './utils.js';
+import { handleImage, handleParagraphs } from './utils.js';
 
 function init() {
     const urlString = window.location.search;
@@ -94,7 +93,7 @@ async function getPosts() {
         */
         workCover.setAttribute('src', `${cdnUrl}${cover[1]}-${cover[2]}.${cover[3]}`);
         workCover.classList.add('work-cover'); // legge vi til class til img tag
-        // følgende linje er erstattet av linje 96 vi sender key image og en class vi kan bruke i dette context
+        // følgende linje er erstattet av linje 101 vi sender key image og en class vi kan bruke i dette context
         //workBlock.append(workCover); // legge vi inn img inn i <a> block
 
         // i alternativt til de fem linjer over kan vi benytte av en stætte funksjon som gjøre jobben en gang for alle

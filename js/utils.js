@@ -29,5 +29,6 @@ export function handleParagraphs(body) {
             }
         })
     };
+    console.log(text)
     return text;
 }
